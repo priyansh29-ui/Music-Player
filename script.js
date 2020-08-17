@@ -1,218 +1,463 @@
-let eq,canvas,ctx,previousBtn,nextBtn,playBtn,currentSong,currentSongElem,audioContext,analyzer,source,containerBackCover,equalizerBackCover,songinfo,artist,visualizerId,seekElem,progressBar,seekId;
-//Get DOM elements for reference
-window.addEventListener("DOMContentLoaded",()=>{
-    const songs = [
-        {
-            songURL:"media/Lehanga.mp3",
-            imgURL:"media/Lehanga.jpeg",
-            name:"Lehanga",
-            artist:"Jass Manak"
-        },
-        {
-            songURL:"media/Prada.mp3",
-            imgURL:"media/Prada.jpeg",
-            name:"Prada",
-            artist:"Jass Manak"
-        },
-        {
-            songURL:"media/Aaj.mp3",
-            imgURL:"media/Aaj.jpeg",
-            name:"Aaj din chadeya",
-            artist:"Rahat fateli khan"
-        },
-        {
-            songURL:"media/Nira ishq.mp3",
-            imgURL:"media/Nira ishq.jpeg",
-            name:"Nira ishq",
-            artist:"Guri"
+var isDrawerOpen = false,
+    isNavOpen = false,
+    mediaPlayer,
+    audioSource,
+    isPlaying = false,
+    bufferingStats,
+    bottomBar,
+    progressTimeDuration,
+    songListDuration,
+    isReady = false,
+    bottomProgress,
+    drawerCurrentTime,
+    drawerSongDuration,
+    drawerBar,
+    dawerProgress,
+    isKorean=false,
+    baseUrl = "https://abdulmoqueet.github.io/music-player/",
+    accentColorAr = [
+        '#ff4b66',
+        '#62ff6e',
+        '#ffb762',
+        '#3444ff',
+        '#16e0aa',
+        '#8f1fff',
+        '#70de00',
+        '#000000'
+    ];
+var song, English = [
+    {
+    songURL:"media/Lehanga.mp3",
+    imgURL:"media/Lehanga.jpeg",
+    name:"Lehanga",
+    artist:"Jass Manak"
+    },
+    { 
+    songURL:"media/Prada.mp3",
+    imgURL:"media/Prada.jpeg",
+    name:"Prada",
+    artist:"Jass Manak"
+    },
+    {
+    songURL:"media/Aaj.mp3",
+    imgURL:"media/Aaj.jpeg", 
+    name:"Aaj din chadeya",
+    artist:"Rahat fateli khan"
+    }, 
+    { 
+        songURL:"media/Nira ishq.mp3", 
+        imgURL:"media/Nira ishq.jpeg",
+        name:"Nira ishq",
+        artist:"Guri"}
+    }
+
+    {
+        name:"",
+        singer:"",
+        duration:"",
+        url:"",
+        albumArt:""
+    }
+];
+
+var currentProfile = {
+    name:"",
+    singer:"",
+    duration:"",
+    url:"",
+    albumArt:"",
+    id:0,
+    accentColor:"#8f1fff"
+};
+
+window.onload = function(){
+
+    mediaPlayer = document.getElementById('media-player'),
+        audioSource = document.getElementById('audio-source');
+
+    document.getElementById("loading").style.display="none";
+
+    mediaPlayer.addEventListener("progress", function() {
+        if(isReady)
+            bufferingStats.style.opacity=1;
+
+        var bufferedEnd = mediaPlayer.buffered.end(mediaPlayer.buffered.length - 1);
+        var mduration =  mediaPlayer.duration;
+        if (mduration > 0) {
+            document.getElementById('bufferedBar').style.width = ((bufferedEnd / mduration)*100) + "%";
+            document.getElementById('drawerBufferedBar').style.width = ((bufferedEnd / mduration)*100) + "%";
         }
-        ];
-        
-        //Pre load images into array - Caching images
-        //This is for quicker loading of images while changing songs reduce HTTP requests
-        songs.map((song) => {
-            const img = new Image();
-            img.src = song.imgURL;
+
+    });
+
+    $('#drawerStopButton').click(function(){
+        mediaPlayer.pause();
+        mediaPlayer.currentTime = 0;
+        isPlaying = false;
+        $('#play-btn').text('play_arrow');
+        $('#drawerPlay').text('play_arrow');
+    });
+
+    document.getElementById("toast")
+        .addEventListener("webkitAnimationEnd", function(){
+        toast.style.animation="none";
+    });
+
+    changeTheme(0);
+
+};
+
+$(document).ready(function(){
+
+    $(".main-container").css("height",window.innerHeight+"px");
+
+    generateElements(false);
+    setCurrentProfile(0);
+
+    $('.nav').click(function(e){
+        e.stopPropagation();
+    });
+
+    mediaPlayer = document.getElementById('media-player'),
+        audioSource = document.getElementById('audio-source'),
+        bufferingStats = document.querySelector('.bufferingStats'),
+        bottomBar = document.getElementById('bottomBar'),
+        progressTimeDuration = document.getElementById('progressTimeDuration'),
+        songListDuration = document.getElementsByClassName('song-list-duration'),
+        bottomProgress = document.getElementById('bottomProgress'),
+        drawerCurrentTime = document.getElementById('drawerCurrentTime'),
+        drawerSongDuration = document.getElementById('drawerSongDuration'),
+        drawerBar = document.getElementById('drawerBar'),
+        dawerProgress = document.getElementById('dawerProgress');
+
+    mediaPlayer.addEventListener('timeupdate', function() {
+        writeProgressAndDuration();
+        bufferingStats.style.opacity=0;
+    });
+
+    bottomProgress.addEventListener('click', function(e) {
+
+        var clickPosition = (e.pageX  - this.offsetLeft) / this.offsetWidth;
+        var jumpTime = clickPosition * mediaPlayer.duration;
+
+        mediaPlayer.currentTime = jumpTime;
+
+        if(!isPlaying)
+            playPause();
+
+    });
+
+    dawerProgress.addEventListener('click', function(e) {
+        var clickPosition = (e.pageX  - this.offsetLeft) / this.offsetWidth;
+        var jumpTime = clickPosition * mediaPlayer.duration;
+
+        mediaPlayer.currentTime = jumpTime;
+
+        if(!isPlaying)
+            playPause();
+
+    });
+
+    function writeProgressAndDuration(){
+        var time = parseInt(mediaPlayer.currentTime, 10),
+            songDuration = parseInt(mediaPlayer.duration, 10),
+            currentSec=0,
+            totalSec=0,
+            prog;
+
+        prog = parseInt(((time / songDuration) * 100), 10) + "%";
+        bottomBar.style.width = prog;
+        drawerBar.style.width = prog;
+
+        var minutes = Math.floor(time / 60),
+            seconds = time - minutes * 60,
+            songDurationMinutes = Math.floor(songDuration / 60),
+            songDurationSeconds = Math.floor(songDuration - songDurationMinutes * 60);
+
+        currentSec = str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2);
+        totalSec = str_pad_left(songDurationMinutes,'0',2)+':'+str_pad_left(songDurationSeconds,'0',2);
+
+        progressTimeDuration.textContent = currentSec+' / '+totalSec;
+
+        songListDuration[currentProfile.id].textContent = currentSec;
+        drawerSongDuration.textContent = totalSec;
+
+        drawerCurrentTime.textContent = currentSec;
+
+        function str_pad_left(string,pad,length) {
+            return (new Array(length+1).join(pad)+string).slice(-length);
+        }
+    }
+
+    $("#favorite").click(function(){
+        if(this.textContent=='favorite')
+            this.textContent='favorite_border';
+        else{
+            this.textContent='favorite';
+            showToast("Favorited");
+        }
+    });
+
+    $("#repeat").click(function(){
+        if(this.textContent=='repeat'){
+            this.textContent='repeat_one';
+            showToast("Repeat One");
+        }else{
+            this.textContent='repeat';
+            showToast("Repeat All");
+        }
+
+    });
+
+});
+
+function changeTheme(id){
+
+    document.documentElement.style.setProperty('--accent-color', accentColorAr[id]);
+    currentProfile.accentColor = accentColorAr[id];
+    if(id==7){
+        currentProfile.accentColor = "#000000";
+        showToast("Expermental Dark");
+    }
+    var card = document.getElementsByClassName('card');
+    songListDuration[currentProfile.id].style.color = currentProfile.accentColor;
+    if(id==7)
+        card[currentProfile.id].style.color = "#ffffff";
+    else
+        card[currentProfile.id].style.color = currentProfile.accentColor;
+
+    if(isKorean){
+        $('.left-pannel__anime').css('color',currentProfile.accentColor);
+    }else{
+        $('.left-pannel__favorite').css('color',currentProfile.accentColor);
+    }
+
+}
+
+function navHandler(){
+
+    if(isNavOpen){
+        closeNav();
+    }else{
+        openNav();
+    }
+
+    function openNav(){
+        $('.nav-container').show();
+        $('.nav').animate({width: "75vw"}, 700, function(){
+            $('.nav p').show();
+            $('.themes').css('display', 'flex');
+            setTimeout(function(){
+                $('.theme').css('transform', 'scale(1)');
+            },100);
+            isNavOpen = true;
         });
-        
- currentSong = songs[0];
- eq = document.querySelector('.equalizer');
- canvas = document.getElementById('equalizer_render');
- previousBtn = document.getElementById('previousBtn');
- nextBtn = document.getElementById('nextBtn');
- playBtn = document.getElementById('playBtn');
- containerBackCover = document.querySelector('.container');
- equalizerBackCover = document.querySelector('.equalizer');
- songinfo = document.querySelector(".songinfo");
- seekElem = document.querySelector(".seek");
- progressBar = document.querySelector(".progressBar");
-ctx = canvas.getContext("2d");
 
-const setSongInfo = ()=>{
-    songinfo.innerText = `${currentSong.artist} - ${currentSong.name}`;
-}
- // drawCanvas to match the container width and height
- const initCanvas = (()=>{
-     canvas.width = eq.clientWidth;
-     canvas.height = eq.clientHeight;
- })();
+    }
 
- const initVisualizer = ()=> {
-     if(!source){
-        source = audioContext.createMediaElementSource(currentSongElem);
-        source.connect(analyzer);
-        analyzer.connect(audioContext.destination);
-     }
-      frameLooper();
-      seekLooper();
- };
-
- const seekLooper = ()=>{
-     seekId = window.requestAnimationFrame(seekLooper);
-     let newSize = currentSongElem.currentTime*eq.clientWidth/currentSongElem.duration;
-    seekElem.style.width = newSize +'px';
- }
-
- const frameLooper = () =>{
-     visualizerId = window.requestAnimationFrame(frameLooper);
-     const fbc_array = new Uint8Array(analyzer.frequencyBinCount);
-     analyzer.getByteFrequencyData(fbc_array);
-     ctx.clearRect(0,0,canvas.width,canvas.height);
-     ctx.fillStyle = "#00CCFF";
-     const bars = 100;
-     const barWidth = canvas.width/100;
-     for (var i =0;i<bars;i++){
-         let barX = i*barWidth;
-         let barHeight = -(fbc_array[i]/2);
-         ctx.fillRect(barX,canvas.height,barWidth,barHeight);
-     }
- };
-
- const setCover = () => {
-     containerBackCover.style.backgroundImage = `url(${currentSong.imgURL})`;
-     equalizerBackCover.style.backgroundImage = `url(${currentSong.imgURL})`;
- }
-
-const setControls = ()=>{
-    if(currentSongElem.paused){
-    document.getElementsByClassName('play')[0].style.display = "block";
-    document.getElementsByClassName('pause')[0].style.display = "none";
-}else if(!currentSong.paused){
-    document.getElementsByClassName('play')[0].style.display = "none";
-    document.getElementsByClassName('pause')[0].style.display = "flex";
-}
+    function closeNav(){
+        $('.nav p').hide();
+        $('.themes').hide();
+        $('.theme').css('transform', 'scale(0)');
+        $('.nav').animate({width: "0vw"}, 700, function(){
+            $('.nav-container').hide();
+            isNavOpen = false;
+        });
+    }
 }
 
- const loadSong = () => {
-    setSongInfo();
-    currentSongElem.setAttribute('src',currentSong.songURL);
-    seekElem.style.width = 0+'px';
-    setControls();
-    setCover();
-    currentSongElem.load();
+function drawerHandler(){
+
+    if(isDrawerOpen){
+        closeDrawer();
+    }else{
+        openDrawer();
+    }
+
+    function openDrawer(){
+
+        $('.bottom-drawer').show();
+        $('#drawerSongName').text(currentProfile.name);
+        $('#drawerSingerName').text(currentProfile.singer); 
+        $('#songAlbumArt').css("background-image", "url("+baseUrl+currentProfile.albumArt + ")");
+        $('.bottom-pannel .bottom__up-arrow').css('transform', 'rotate(180deg)');
+        $('.drawer-holder').animate({height: "60vh"}, 1000, function(){
+
+            $('.bottom-drawer .bottom__up-arrow').css('transform', 'rotate(180deg)');
+            $('.column').css('display', 'flex');
+            isDrawerOpen = true; 
+        });
+
+    }
+
+    function closeDrawer(){
+        $('.column').hide();
+        $('.drawer-holder').animate({height: "12vh"}, 1000, function(){
+            isDrawerOpen=false; 
+            $('.bottom-drawer').hide();
+            $('.bottom-pannel .bottom__up-arrow').css('transform', 'rotate(0deg)');
+            $('.bottom-drawer .bottom__up-arrow').css('transform', 'rotate(0deg)');
+        });
+    }
+
+}
+
+function generateElements(ko){
+
+    var cards = "", songList="";
+
+    $('.cards-holder').html("");
+    $('.list-view').html("");
+
+    if(ko){
+        songs = korean;
+        $('.left-pannel__anime').text('_K-POP');
+        $('.left-pannel__anime').css('color',currentProfile.accentColor);
+        $('.left-pannel__favorite').text('English');
+        $('.left-pannel__favorite').css('color',"black");
+    }else{
+        songs = english;
+        $('.left-pannel__favorite').text('_English');
+        $('.left-pannel__favorite').css('color',currentProfile.accentColor);
+        $('.left-pannel__anime').text('K-POP');
+        $('.left-pannel__anime').css('color',"black");
+    }
+
+    for(var i=0; i<songs.length; i++){
+
+        cards = cards+`<div class="card" onclick="playSong(`+i+`);" style="background-image: url(`+
+            baseUrl+songs[i].albumArt
+            +`)">
+<div class="card__song-info">
+<div class="card__song-artist-title">
+<div class="card__song-info__name">
+`+songs[i].name+`
+</div>
+
+<div class="card__song-info__singer">
+`+songs[i].singer+`
+</div>
+</div>
+
+</div>
+</div>`;
+
+    }
+
+    $('.cards-holder').html(cards);
+
+    for(var i=0; i<songs.length-1; i++){
+        songList = songList + `<div class="song-list" onclick="playSong(`+i+`)">
+<div class="song-list__info">
+<img src="`+baseUrl+songs[i].albumArt+`">
+<div>
+<div class="song-list__name">`+songs[i].name+`</div>
+<div id="songListPlayedTime">`+songs[i].singer+`</div>
+</div>
+</div>
+<div id="songListDuration" class="song-list-duration">`+songs[i].duration+`</div>
+</div>`
+    }
+
+    $('.list-view').html(songList);
+
+    this.isKorean = ko;
+
+}
+
+function playSong(songId, checkPause){
+
+    var card = document.getElementsByClassName('card');
+
+    if(checkPause == undefined)
+        if(currentProfile.name == songs[songId].name){
+            songListDuration[songId].style.color = currentProfile.accentColor;
+            card[songId].style.color = currentProfile.accentColor;
+            playPause();
+            return;
+        }
+    if(currentProfile.id != songId){
+        songListDuration[songId].style.color = currentProfile.accentColor;
+        songListDuration[currentProfile.id].style.color = "grey";
+        songListDuration[currentProfile.id].textContent = currentProfile.duration;
+        card[songId].style.color = currentProfile.accentColor;
+        card[currentProfile.id].style.color = "#ffffff";
+    }
+    setCurrentProfile(songId);
+    audioSource.src = baseUrl+currentProfile.url;
+    $("#bottomSongName").text(currentProfile.name);
+    $('#bottomSingerName').text(currentProfile.singer);
+    mediaPlayer.load();
+    mediaPlayer.play();
+    $('#play-btn').text('pause');
+    $('#drawerPlay').text('pause');
+    isPlaying = true;
+    isReady = true;
+}
+
+function playPause(){
+    isReady = true;
+    if(!isPlaying){
+        isPlaying = true;
+        mediaPlayer.play();
+        $('#play-btn').text('pause');
+        $('#drawerPlay').text('pause');
+    }else{
+        isPlaying = false;
+        mediaPlayer.pause();
+        $('#play-btn').text('play_arrow');
+        $('#drawerPlay').text('play_arrow');
+    }
+
+    var card = document.getElementsByClassName('card');
+    songListDuration[currentProfile.id].style.color = currentProfile.accentColor;
+    card[currentProfile.id].style.color = currentProfile.accentColor;
+}
+
+window.onerror=function(){
+    console.error=null;
+    return true;
 };
 
+function nextSong(){
+    var songId = 0;
+    if(currentProfile.id == songs.length-2)
+        songId = 0;
+    else
+        songId=currentProfile.id+1;
+    playSong(songId, true);
+    setCurrentProfile(songId);
+    $('#drawerSongName').text(currentProfile.name);
+    $('#drawerSingerName').text(currentProfile.singer); 
+    $('#songAlbumArt').css("background-image", "url("+baseUrl+currentProfile.albumArt + ")");
 
- const createCurrentSongElem = (()=>{
-     currentSongElem = new Audio();
-     currentSongElem.crossOrigin = "anonymous";
-     currentSongElem.src = currentSong.songURL;
-     loadSong();
- })();
- 
-
-const reDrawCanvas = ()=>{
-    canvas.width = eq.clientWidth;
-    canvas.height = eq.clientHeight;
-};
-
-const playCurrentSong = ()=>{
-    if(!audioContext && !analyzer){
-        audioContext = new (window.AudioContext||window.webkitAudioContext)();
-        analyzer = audioContext.createAnalyser();
-    }
-window.cancelAnimationFrame(visualizerId);
-window.cancelAnimationFrame(seekId);
-if(currentSongElem.paused) {
-    currentSongElem.play();
-    initVisualizer();
-} else{
-    currentSongElem.pause();
-    ctx.clearRect(0,0,canvas.width,canvas.height);
 }
-setControls();
-};
 
-const goToPrevSong = () =>{
-    window.cancelAnimationFrame(visualizerId);
-    window.cancelAnimationFrame(seekId);
-    const currentIndex = songs.indexOf(currentSong);
-    const lastIndex = songs.length-1;
-    if(currentIndex == 0) {
-        currentSong = songs[lastIndex];
-    }else {
-        currentSong = songs[currentIndex - 1];
-    }
-    loadSong();
-    };
+function prevSong(){
+    var songId = 0;
+    if(currentProfile.id == 0)
+        songId = songs.length-2;
+    else
+        songId=currentProfile.id-1;
+    playSong(songId, true);
+    setCurrentProfile(songId);
+    $('#drawerSongName').text(currentProfile.name);
+    $('#drawerSingerName').text(currentProfile.singer);
+    $('#songAlbumArt').css("background-image", "url("+baseUrl+currentProfile.albumArt + ")");
+}
 
-    const goToNextSong = () => {
-    window.cancelAnimationFrame(visualizerId);
-    window.cancelAnimationFrame(seekId);
-    const currentIndex = songs.indexOf(currentSong);
-    const lastIndex = songs.length - 1;
-    if(currentIndex == lastIndex){
-        currentSong = songs[0]
-    }else {
-        currentSong = songs[currentIndex + 1];
-    }
-    loadSong();
-    };
+function showToast(text){
+    var toast = document.getElementById("toast");
+    document.getElementById("toastText").textContent = text;
+    toast.style.animation = "fade 2s";
+    toast.style.anmationFillMode = "forwards";
+}
 
-window.addEventListener("resize",()=>{
-reDrawCanvas();
-});
-
-playBtn.addEventListener("click",()=>{
-    playCurrentSong();
-});
-previousBtn.addEventListener("click",()=>{
-    goToPrevSong();
-});
-nextBtn.addEventListener("click",()=>{
-    goToNextSong();
-});
-
-let dragstart;
-seekElem.addEventListener("touchstart",(event)=>{
-   //cancel animation for seek and visualizer
-    window.cancelAnimationFrame(seekId);
-   window.cancelAnimationFrame(visualizerId);
-   currentSongElem.pause();
-    setControls();
-   dragstart = event.touches[0].pageX;
-},{passive:true});
-
-seekElem.addEventListener("touchmove",(event)=>{
-    let dragmove = event.touches[0].pageX;
-    if(dragmove > dragstart){
-         seekElem.style.width = parseFloat(seekElem.style.width,10) + 1 +'px';
-    }else {
-        seekElem.style.width = parseFloat(seekElem.style.width,10) - 1 +'px';
-    }
-},{passive:true});
-
-seekElem.addEventListener("touchend",(event)=>{
-    const seekPosition= parseFloat(seekElem.offsetWidth,10);
-    const totalLength = parseFloat(progressBar.offsetWidth,10);
-    const newTime = (seekPosition/totalLength)*currentSongElem.duration;
-    currentSongElem.currentTime = newTime;
-    playCurrentSong();
-});
-
-currentSongElem.addEventListener("ended",()=>{
-    currentSongElem.currentTime = 0;
-    goToNextSong();
-    playCurrentSong();
-});
-});
+function setCurrentProfile(id){
+    currentProfile.id = id;
+    currentProfile.name = songs[id].name;
+    currentProfile.singer = songs[id].singer;
+    currentProfile.duration = songs[id].duration;
+    currentProfile.url = songs[id].url;
+    currentProfile.albumArt = songs[id].albumArt;
+}
