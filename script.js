@@ -14,7 +14,7 @@ var isDrawerOpen = false,
     drawerBar,
     dawerProgress,
     isKorean=false,
-    baseUrl = "https://abdulmoqueet.github.io/music-player/",
+    baseUrl = "https://priyanshagrawal29.github.io/Music/",
     accentColorAr = [
         '#ff4b66',
         '#62ff6e',
@@ -25,7 +25,7 @@ var isDrawerOpen = false,
         '#70de00',
         '#000000'
     ];
-var song, English = [
+var song, english = [
     {
     songURL:"media/Lehanga.mp3",
     imgURL:"media/Lehanga.jpeg",
@@ -50,6 +50,35 @@ var song, English = [
         name:"Nira ishq",
         artist:"Guri"}
     }
+var korean = [
+    {
+    songURL:"media/Lehanga.mp3",
+    imgURL:"media/Lehanga.jpeg",
+    name:"Lehanga",
+    artist:"Jass Manak"
+    },
+    { 
+    songURL:"media/Prada.mp3",
+    imgURL:"media/Prada.jpeg",
+    name:"Prada",
+    artist:"Jass Manak"
+    },
+    {
+    songURL:"media/Aaj.mp3",
+    imgURL:"media/Aaj.jpeg", 
+    name:"Aaj din chadeya",
+    artist:"Rahat fateli khan"
+    }, 
+        {
+        name:"",
+        singer:"",
+        duration:"",
+        url:"",
+        albumArt:""
+    }
+];
+
+
 
     {
         name:"",
