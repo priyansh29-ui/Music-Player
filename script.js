@@ -3,16 +3,16 @@ let eq,canvas,ctx,previousBtn,nextBtn,playBtn,currentSong,currentSongElem,audioC
 window.addEventListener("DOMContentLoaded",()=>{
     const songs = [
         {
-            songURL:"https://cors-anywhere.herokuapp.com/https://bestmusic.uz/play/dl/burito-megahit_(www.bestmusic.uz).mp3",
-            imgURL:"https://static.mk.ru/upload/entities/2016/01/28/articles/detailPicture/08/1d/8e/aa4649327_4624911.jpg",
-            name:"Megahit",
-            artist:"Burrito"
+            songURL:"media/Lehanga.mp3",
+            imgURL:"media/Lehanga.jpeg",
+            name:"Lehanga",
+            artist:"Jass Manak"
         },
         {
-            songURL:"https://cors-anywhere.herokuapp.com/https://www.soundboard.com/mediafiles/23/232191-0b3bc5dc-6f10-4580-a26a-ffd1416230c7.mp3",
-            imgURL:"https://a3-images.myspacecdn.com/images03/26/ce667e1f646e41ee9486b349389a29ce/600x600.jpg",
-            name:"Flying Sphaghetti Monster",
-            artist:"Doctor P"
+            songURL:"media/Prada.mp3",
+            imgURL:"media/Prada.jpeg",
+            name:"Prada",
+            artist:"Jass Manak"
         },
         {
             songURL:"https://cors-anywhere.herokuapp.com/https://bestmusic.uz/play/dl/alekseev-snov-oskolki_(www.bestmusic.uz).mp3",
