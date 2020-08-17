@@ -15,16 +15,16 @@ window.addEventListener("DOMContentLoaded",()=>{
             artist:"Jass Manak"
         },
         {
-            songURL:"https://cors-anywhere.herokuapp.com/https://bestmusic.uz/play/dl/alekseev-snov-oskolki_(www.bestmusic.uz).mp3",
-            imgURL:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR_4idQnhygppqaPZww3vLkZY1XNak7ohPSl3KlYpDfnvJUK2bb",
-            name:"Snov Oskolki",
-            artist:"Alekseev"
+            songURL:"media/Aaj.mp3",
+            imgURL:"media/Aaj.jpeg",
+            name:"Aaj din chadeya",
+            artist:"Rahat fateli khan"
         },
         {
-            songURL:"https://cors-anywhere.herokuapp.com/http://bestmusic.uz/play/dl/serebro-slomana_(www.bestmusic.uz).mp3",
-            imgURL:"http://d2lubch9d26anb.cloudfront.net/cdn/farfuture/ydf8G66JSDQrLe3gkeBj24nMcq0GyJplTqLkoRKtNZo/mtime:1481005992/sites/default/files/artworks-000180273517-wbenvu-t500x500.jpg",
-            name:"Slomana",
-            artist:"Serebro"
+            songURL:"media/Nira ishq.mp3",
+            imgURL:"media/Nira ishq.jpeg",
+            name:"Nira ishq",
+            artist:"Guri"
         }
         ];
         
