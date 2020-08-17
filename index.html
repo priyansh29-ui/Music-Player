@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vanilla JS audio player</title>
+    <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        
+        <div class="equalizer">
+                <div class="info">
+                        <div class="songinfo"></div>
+                    </div>
+            <audio id="audio"></audio>
+            <canvas id="equalizer_render"></canvas>
+            <div class="progressBar">
+                <div class="seek">
+                </div>
+            </div>
+        </div>
+        <div  class="audio-controls">
+            <div id="previousBtn" class="navigation-btn">
+                <div class="previous"></div>
+                <div class="previous"></div>
+            </div>
+            <div id="playBtn" class="play-btn">
+                <div class="play"></div>
+                <div class="pause">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div id="nextBtn" class="navigation-btn">
+                <div class="next"></div>
+                <div class="next"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
