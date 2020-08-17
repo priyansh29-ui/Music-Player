@@ -216,5 +216,3 @@ currentSongElem.addEventListener("ended",()=>{
     playCurrentSong();
 });
 });
-alert("An audio player built using vanilla JS.\n Please wait for a while if music does not play after pressing play.\nIf found an issue leave a comment else leave a like..\n v1. Added a seek for touch screen devices.");
-
