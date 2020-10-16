@@ -4,8 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="author" content="Priyansh Agrawal">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Music Player</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -467,6 +465,9 @@ body.dark .players .material-icons.active  {
        <button class="volume" onclick="volumeBox(event)">
          <i class="material-icons">volume_up</i>
        </button>  
+      <button class="favorite" onclick="addFvt(event)">
+         <i class="material-icons">favorite</i>
+       </button>
       <button class="download" onclick="download(event)">
          <i class="material-icons">download</i>
      </div>
