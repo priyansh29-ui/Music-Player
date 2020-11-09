@@ -154,59 +154,6 @@ button{
  text-align: center;
  min-height:100vh;
 }
-*{
-	margin: 0;
-	padding: 0;
-	outline: none;
-	box-sizing: border-box;
-	font-family: 'Comfortaa', cursive;
-}
-
-body{
-	background: url('https://i.imgur.com/NMnbn2s.jpg') no-repeat center;
-	background-size: cover;
-	width: 100%;
-	height: 100vh;
-}
-
-.wrapper{
-	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0,0.6);
-    max-width: 550px;
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 5px;
-}
-
-.wrapper .input {
-    width: 85%;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.searchbtn {
-    background: #ffec00;
-    width: 10%;
-    border-radius: 5px;
-    position: relative;
-    cursor: pointer;
-}
-
-.searchbtn .fas{
-	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-}
-
 .sec-1 svg {
  width:90%;
 }
@@ -511,7 +458,58 @@ body.dark .players .material-icons.active  {
     border-radius:50%;
     cursor: pointer;
 } 
-  
+*{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	box-sizing: border-box;
+	font-family: 'Comfortaa', cursive;
+}
+
+body{
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
+}
+
+.wrapper{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0,0.6);
+    max-width: 550px;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.wrapper .input {
+    width: 85%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.searchbtn {
+    background: #ffec00;
+    width: 10%;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.searchbtn .fas{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}
+ 
 .volume-box {
  display:none;
 }
@@ -548,12 +546,6 @@ body.dark .players .material-icons.active  {
 <section class="sec sec-1" id="sec-1">
 <div style="background-image: url('pins/img5.jpg');">
 <div class="slideshow-container">
-        <div class="wrapper">
-	       <input type="text" class="input" 
-	       placeholder="What are you looking for?">
-	       <div class="searchbtn"><i class="fas fa-search"></i></div>
-        </div>
-
         <div class="mySlides fade">
           <div class="numbertext">1 / 4</div>
           <img class="img" src="pins/img1.png" style="width:100%">
@@ -621,7 +613,11 @@ body.dark .players .material-icons.active  {
       
      <span onclick="volumeUp()"><i class="material-icons">add</i></span>
      </div>
-     
+     <div class="wrapper">
+	       <input type="text" class="input" 
+	       placeholder="What are you looking for?">
+	       <div class="searchbtn"><i class="fas fa-search"></i></div>
+     </div>
      <div class="tools" >
        <button class="equaliser" onclick="equalizerBtn(event)">
        <i class="material-icons">equalizer</i>
