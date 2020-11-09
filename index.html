@@ -458,6 +458,32 @@ body.dark .players .material-icons.active  {
     border-radius:50%;
     cursor: pointer;
 } 
+.volume-box {
+ display:none;
+}
+.players.active .volume-box {
+ transform:translateY(15px);
+ display: none;
+}
+.players.active .volume-box.show {
+ display: block;
+}
+
+.volume-box .progress-bar {
+ position:relative;
+ width:60%;
+}
+.volume-box > span {
+ display:inline-block;
+ height:30px;
+ width:30px;
+ margin:0 5px;
+ cursor:pointer;
+ transition:200ms;
+}
+.volume-box > span:hover {
+ color:var(--primary);
+}
 *{
 	margin: 0;
 	padding: 0;
@@ -508,33 +534,6 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 18px;
-}
- 
-.volume-box {
- display:none;
-}
-.players.active .volume-box {
- transform:translateY(15px);
- display: none;
-}
-.players.active .volume-box.show {
- display: block;
-}
-
-.volume-box .progress-bar {
- position:relative;
- width:60%;
-}
-.volume-box > span {
- display:inline-block;
- height:30px;
- width:30px;
- margin:0 5px;
- cursor:pointer;
- transition:200ms;
-}
-.volume-box > span:hover {
- color:var(--primary);
 }
 #audio {
  display:none;
@@ -613,11 +612,6 @@ body{
       
      <span onclick="volumeUp()"><i class="material-icons">add</i></span>
      </div>
-     <div class="wrapper">
-	       <input type="text" class="input" 
-	       placeholder="What are you looking for?">
-	       <div class="searchbtn"><i class="fas fa-search"></i></div>
-     </div>
      <div class="tools" >
        <button class="equaliser" onclick="equalizerBtn(event)">
        <i class="material-icons">equalizer</i>
@@ -650,6 +644,11 @@ body{
      </div>
    </div>
  </div>
+	 <div class="wrapper">
+	       <input type="text" class="input" 
+	       placeholder="What are you looking for?">
+	       <div class="searchbtn"><i class="fas fa-search"></i></div>
+     	 </div>
 </section>
 <!-- script  -->
 <script>
