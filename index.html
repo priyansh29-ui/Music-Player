@@ -532,6 +532,54 @@ body.dark .players .material-icons.active  {
 </section>
 <section class="sec sec-2 hide" id="sec-2">
 <div style="background-image: url('pins/img5.jpg');">
+<nav id="nav">
+        <div onclick="openm()" class="menu icon">
+            <i class="material-icons">menu</i>
+        </div>
+        <div class="format" align="center">
+            <nav class="nav">
+                <a href="index.html" target="_blank">Pure</a>
+                <a class="eight" href="8d.html" target="_blank">8D</a>
+                <a href="16d.html" target="_blank">16D</a>
+            </nav>
+        </div>
+        <div onclick="opensearch()" class="search icon">
+            <i class="material-icons">search</i>
+        </div>
+    </nav>
+    <div id="sbar" class="searchbar">
+        <div onclick="closesearch()" class="back icon">
+            <i class="material-icons">arrow_back</i>
+        </div>
+        <input oninput="search()" placeholder="Search For Music..." id="inp">
+    </div>
+    <div class="banner">
+        <div class="div">
+            <div class="text" id="text"></div>
+        </div>
+    </div>
+    <div id="container" class="container">
+    </div>
+    
+    <div class="con">
+
+        <div id="loadmusic" class="loadingmusic">
+            <div class="loader" id="music">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+        </div>
+        <div id="pre" class="preloader">
+            <div class="loaders">
+            </div>
+     </div>
 <header class="header">
  <h3>All Songs</h3>
 </header>
@@ -1178,6 +1226,195 @@ function setEqualizer(action = false){
   thumb.classList.remove("pause");
  }
 }
+window.onscroll = function() {
+        
+            var nav = document.getElementById("nav");
+            var textb = document.getElementById("text");
+        
+            textb.style.transform = "translate(0, -" + window.scrollY / 2 + "px)"
+        
+            if (window.scrollY >= 145) {
+        
+                nav.style.background = "rgba(20,129,179,0.6)";
+                nav.style.backdropFilter = "blur(2px)";
+        
+        
+            } else {
+        
+                nav.style.background = "transparent";
+                nav.style.backdropFilter = "blur(0px)";
+            }
+        
+        }
+        
+        
+        
+        window.onload = function() {
+            
+           
+            var container = document.getElementById("container");
+        
+            for (var i = 0; i <= songs.length - 1; i++) {
+        
+                container.innerHTML += markup(i, songs[i].name, songs[i].artist, songs[i].poster);
+        
+            }
+            var pre = document.getElementById("pre");
+        
+            pre.style.display = "none";
+        }
+            var swalin = document.getElementById("swalin");
+            swalin.onclick = function(){
+                swal("Enjoy","Hi,\n\n\nHere you can listen to music with different effects(Normal,8D and 16D)..\n\nLittle info about these effects,\n\nNormal:The normal sound you get in your device's built-in speakers.\n8D, 16D:You will feel like the singer is walking on your ears(Headphones required to get the BEST effects).\n\nThank you\n\n</> with love by Sakindu..","info");
+            }
+        
+        
+        
+
+        function opensearch() {
+        
+            document.getElementById("sbar").style.right = "0";
+        
+            scrollTo(0, 210);
+        
+        }
+        
+        function openm() {
+        
+            document.getElementById("drop").style.left = "0";
+            
+        
+        }
+        
+        function closem() {
+        
+            document.getElementById("drop").style.left = "-300px";
+        
+        }
+        
+        function closesearch() {
+        
+            document.getElementById("sbar").style.right = "-100%";
+        
+            document.getElementById("inp").value = "";
+        
+            var cardc = document.getElementsByClassName("card");
+        
+            for (var i = 0; i <= cardc.length - 1; i++) {
+        
+                cardc[i].style.display = "";
+        
+            }
+        
+        }
+        
+        
+        function search() {
+            var m = document.getElementsByClassName("card");
+            var inp = document.getElementById("inp").value.toUpperCase();
+            for (var i = 0; i <= m.length - 1; i++) {
+                if (m[i].innerHTML.toUpperCase().indexOf(inp) != -1) {
+                    m[i].style.display = "";
+                } else {
+                    m[i].style.display = "none";
+                }
+            }
+        }
+        
+        
+        function mint() {
+            navigator.vibrate([100,20]);
+            var isPlaying = aud.currentTime > 0 && !aud.paused && !aud.ended && aud.readyState > 2;
+        
+            if (isPlaying) {
+                aud.currentTime = aud.currentTime - 10;
+            }
+        }
+        
+        
+        function maxt() {
+            navigator.vibrate([100,20]);
+            var isPlaying = aud.currentTime > 0 && !aud.paused && !aud.ended && aud.readyState > 2;
+        
+            if (isPlaying) {
+                aud.currentTime = aud.currentTime + 10;
+            }
+        }
+        
+        
+        
+        
+        
+        
+        function play(e, i) {
+            navigator.vibrate(200);
+        
+        
+        
+            if (songs[i].isPlay == false) {
+        
+                var loadmusic = document.getElementById("loadmusic");
+        
+                loadmusic.style.transform = "scaleY(1)";
+        
+        
+                aud.addEventListener('loadeddata', function()  {
+        
+                    loadmusic.style.transform = "scaleY(0)"; 
+                }, false);
+        
+        
+                if (lastsong == null) {
+        
+                    e.innerHTML = "<i class='material-icons'>pause</i>";
+        
+                    aud.src = songs[i].song;
+        
+                    aud.play();
+        
+                    songs[i].isPlay = true;
+        
+                    lastsong = i;
+        
+                } else {
+                    navigator.vibrate(250);
+        
+        
+                    songs[lastsong].isPlay = false;
+        
+                    document.getElementById("playbtn" + lastsong).innerHTML = "<i class='material-icons'>play_arrow</i>";
+        
+                    e.innerHTML = "<i class='material-icons'>pause</i>";
+        
+                    aud.src = songs[i].song;
+        
+                    aud.play();
+        
+                    songs[i].isPlay = true;
+        
+                    lastsong = i;
+        
+                }
+        
+        
+        
+            } else {
+                
+        
+                var isPlaying = aud.currentTime > 0 && !aud.paused && !aud.ended && aud.readyState > 2;
+        
+                if (isPlaying) {
+        
+                    e.innerHTML = "<i class='material-icons'>play_arrow</i>";
+        
+                    songs[i].isPlay = false;
+        
+                    aud.pause();
+                     lastsong = null;
+        
+                }
+            }
+        }
 </script>
 </body>
 </html>
