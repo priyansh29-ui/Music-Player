@@ -216,7 +216,7 @@ button{
     margin-left: 90px; 
    } 
  
-.animals{ 
+.name{ 
    display: list-item;     
   }  
 .header button:hover {
@@ -631,19 +631,6 @@ body.dark .players .material-icons.active  {
         showSlides();
 
         function showSlides() {
-            let input = document.getElementById('searchbar').value 
-            input=input.toLowerCase(); 
-            let x = document.getElementsByClassName('name'); 
-      
-            for (i = 0; i < x.length; i++) {  
-            if (!x[i].innerHTML.toLowerCase().includes(input)) { 
-            x[i].style.display="none"; 
-            } 
-            else { 
-            x[i].style.display="list-item";                  
-            } 
-            } 
-            } 
             var i;
             var slides = document.getElementsByClassName("mySlides");
             var dots = document.getElementsByClassName("dot");
@@ -661,6 +648,20 @@ body.dark .players .material-icons.active  {
         }
  </script>
  <script>
+function search_musicData() { 
+    let input = document.getElementById('searchbar').value 
+    input=input.toLowerCase(); 
+    let x = document.getElementsByClassName('name'); 
+      
+    for (i = 0; i < x.length; i++) {  
+        if (!x[i].innerHTML.toLowerCase().includes(input)) { 
+            x[i].style.display="none"; 
+        } 
+        else { 
+            x[i].style.display="list-item";                  
+        } 
+    } 
+} 
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
