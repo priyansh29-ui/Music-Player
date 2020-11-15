@@ -557,10 +557,6 @@ body.dark .players .material-icons.active  {
 </section>
 <section class="sec sec-2 hide" id="sec-2">
 <div style="background-image: url('pins/img5.jpg');">
-<nav id="nav">
-        <div onclick="openm()" class="menu icon">
-            <i class="material-icons">menu</i>
-        </div>
  <input id="searchbar" onkeyup="search_showSlides()" type="text"
         name="search" placeholder="Search music.."> 
 <header class="header">
@@ -676,6 +672,7 @@ function search_musicData() {
  const musicList = document.getElementById("music-list");
  const body = document.querySelector("body");
  // variable 
+  
  let musicData = [
  {
  id:1,
