@@ -566,6 +566,11 @@ body.dark .players .material-icons.active  {
  <div class="music-list" id="music-list">
  </div>
  <audio src="" id="audio" ></audio>
+ <ul id="myUL">
+  <li><a href="musicData">Lehanga</a></li>
+  <li><a href="musicData">Yaar Purane</a></li>
+ </ul>
+  
  <div class="players" id="players">
    <div style="background-image: url('pins/img7.jpg');">
    <button class="back-btn" onclick="showplayer()"><i class="material-icons" >expand_more</i></button>
@@ -647,7 +652,7 @@ body.dark .players .material-icons.active  {
 function search_musicData() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
-    let x = document.getElementsByClassName('name'); 
+    let x = document.getElementsByClassName('li'); 
       
     for (i = 0; i < x.length; i++) {  
         if (!x[i].innerHTML.toLowerCase().includes(input)) { 
