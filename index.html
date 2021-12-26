@@ -660,10 +660,13 @@ function search_musicData() {
         } 
     } 
 } 
+  // Disabled Right Click Section
    window.oncontextmenu = function () {
             console.log("Right Click Disabled");
+            alert("Warning!😒 Right Click Disabled");
             return false;
         }
+  // Disabled Right Click 
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
