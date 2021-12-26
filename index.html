@@ -667,21 +667,7 @@ function search_musicData() {
             return false;
         }
   // Disabled Right Click 
- function DisableCopyPaste (e) 
-{
- // Message to display
- var message = "Cntrl key/ Right Click Option disabled";
- // check mouse right click or Ctrl key press
-var kCode = event.keyCode || e.charCode; 
-//FF and Safari use e.charCode, while IE use e.keyCode
- if (kCode == 17 || kCode == 2)
- {
- alert(message);
- return false;
- }
-}
-</script>
- <asp:TextBox ID="TextBox1" runat="server" onKeyDown="return DisableCopyPaste(event)"onMouseDown="return DisableCopyPaste (event)"></asp:TextBox> 
+ 
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
