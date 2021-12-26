@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8" />
 <link rel="icon" href="pins/img8.jpg">
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<textarea class="form-control"  oncopy="showError()" onpaste="showError()"></textarea>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -669,13 +667,21 @@ function search_musicData() {
             return false;
         }
   // Disabled Right Click 
-  function showError(){
-					alert('you are not allowed to cut,copy or paste here');
-				}
-				
-				$('.form-control').bind("cut copy paste",function(e) {
-					e.preventDefault();
-				});
+ function DisableCopyPaste (e) 
+{
+ // Message to display
+ var message = "Cntrl key/ Right Click Option disabled";
+ // check mouse right click or Ctrl key press
+var kCode = event.keyCode || e.charCode; 
+//FF and Safari use e.charCode, while IE use e.keyCode
+ if (kCode == 17 || kCode == 2)
+ {
+ alert(message);
+ return false;
+ }
+}
+</script>
+ <asp:TextBox ID="TextBox1" runat="server" onKeyDown="return DisableCopyPaste(event)"onMouseDown="return DisableCopyPaste (event)"></asp:TextBox> 
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
