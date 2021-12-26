@@ -645,22 +645,7 @@ body.dark .players .material-icons.active  {
         }
  </script>
  <script>
-  function disableselect(e){  
-return false  
-}  
-
-function reEnable(){  
-return true  
-}  
-
-//if IE4+  
-document.onselectstart=new Function ("return false")  
-document.oncontextmenu=new Function ("return false")  
-//if NS6  
-if (window.sidebar){  
-document.onmousedown=disableselect  
-document.onclick=reEnable  
-}
+  
 function search_musicData() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
@@ -675,6 +660,10 @@ function search_musicData() {
         } 
     } 
 } 
+   window.oncontextmenu = function () {
+            console.log("Right Click Disabled");
+            return false;
+        }
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
@@ -1252,14 +1241,6 @@ function setEqualizer(action = false){
   thumb.classList.remove("pause");
  }
 }
-  jQuery(document).ready(function(){
-  jQuery(function() {
-        jQuery(this).bind("contextmenu", function(event) {
-            event.preventDefault();
-            alert('Right click disable in this site!!')
-        });
-    });
-});
 </script>
 </body>
 </html>
