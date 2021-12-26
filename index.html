@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <link rel="icon" href="pins/img8.jpg">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<textarea class="form-control"  oncopy="showError()" onpaste="showError()"></textarea>
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -667,6 +669,13 @@ function search_musicData() {
             return false;
         }
   // Disabled Right Click 
+  function showError(){
+					alert('you are not allowed to cut,copy or paste here');
+				}
+				
+				$('.form-control').bind("cut copy paste",function(e) {
+					e.preventDefault();
+				});
  const playerWindow = document.getElementById("players");
  const audio = document.getElementById("audio");
  const name = document.getElementById("name");
