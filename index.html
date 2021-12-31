@@ -592,14 +592,13 @@ body.dark .players .material-icons.active  {
             <h1>Music Player</h1>
         </div>  
         </br>
-            <p>Created by Priyansh Agrawal</p>
-            <p>New Songs 😊 its for entertainment enjoy</p>
+ <p>Created by Priyansh Agrawal</p>
              <div class="center">
  <div id="captchaBackground">
  <canvas id="captcha">captcha text</canvas>
  <input id="textBox" type="text" name="text">
  <div id="buttons">
- <input id="showMusicList()" type="submit">
+ <input id="submitButton" type="submit">
  <button onclick="showMusicList()">Let's Start</button>
  <button id="refreshButton" type="submit">Refresh</button>
  </div>
@@ -712,7 +711,7 @@ ctx.font = "30px Roboto";
 ctx.fillStyle = "#08e5ff";
 
 let userText = document.querySelector('#textBox');
-let showMusicList() = document.querySelector('#showMusicList()');
+let submitButton = document.querySelector('#submitButton');
 let output = document.querySelector('#output');
 let refreshButton = document.querySelector('#refreshButton');
 
