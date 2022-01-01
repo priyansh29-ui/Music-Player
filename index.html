@@ -770,7 +770,7 @@ refreshButton.addEventListener('click', function() {
 function search_musicData() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
-    let x = document.getElementsByClassName('musicData'); 
+    let x = document.getElementsByClassName('music-list'); 
       
     for (i = 0; i < x.length; i++) {  
         if (!x[i].innerHTML.toLowerCase().includes(input)) { 
