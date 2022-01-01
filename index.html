@@ -598,8 +598,8 @@ body.dark .players .material-icons.active  {
  <canvas id="captcha">captcha text</canvas>
  <input id="textBox" type="text" name="text">
  <div id="buttons">
- <input id="submitButton" type="submit">
- <button onclick="showMusicList()">Let's Start</button>
+ <!---<input id="submitButton" type="submit">--->
+ <button onclick="showMusicList()" type="showMusicList()">Let's Start</button>
  <button id="refreshButton" type="submit">Refresh</button>
  </div>
   <span id="output"></span>
@@ -711,7 +711,7 @@ ctx.font = "30px Roboto";
 ctx.fillStyle = "#08e5ff";
 
 let userText = document.querySelector('#textBox');
-let submitButton = document.querySelector('#submitButton');
+let showMusicList() = document.querySelector('#showMusicList()');
 let output = document.querySelector('#output');
 let refreshButton = document.querySelector('#refreshButton');
 
@@ -744,7 +744,7 @@ userText.addEventListener('keyup', function(e) {
 // This event listener is stimulated whenever the user clicks the "Submit" button
 // "Correct!" or "Incorrect, please try again" message is
 // displayed after validating the input text with CAPTCHA
-submitButton.addEventListener('click', function() {
+showMusicList().addEventListener('click', function() {
  if (userText.value === c) {
  output.classList.add("correctCaptcha");
  output.innerHTML = "Correct!";
