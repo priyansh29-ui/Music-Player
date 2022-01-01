@@ -840,6 +840,7 @@ submitButton.addEventListener('click', function() {
  if (userText.value === c) {
  output.classList.add("correctCaptcha");
  output.innerHTML = "Correct!";
+  button.onclick(showMusicList());
  } else {
  output.classList.add("incorrectCaptcha");
  output.innerHTML = "Incorrect, please try again";
