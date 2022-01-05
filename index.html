@@ -663,6 +663,7 @@ body.dark .players .material-icons.active  {
         </div>  
         </br>
  <p>Created by Priyansh Agrawal</p>
+ <!--
              <div class="center">
  <div id="captchaBackground">
  <canvas id="captcha">captcha text</canvas>
@@ -670,6 +671,7 @@ body.dark .players .material-icons.active  {
  <div id="buttons">
  <input id="submitButton" type="submit">
  <button onclick="showMusicList()">Let's Start</button>
+  -->
  <button id="refreshButton" type="submit">Refresh</button>
  </div>
   <span id="output"></span>
@@ -797,7 +799,7 @@ body.dark .players .material-icons.active  {
         }
  </script>
  <script>
- let captchaText = document.querySelector('#captcha');
+/* let captchaText = document.querySelector('#captcha');
 var ctx = captchaText.getContext("2d");
 ctx.font = "30px Roboto";
 ctx.fillStyle = "#08e5ff";
@@ -859,7 +861,7 @@ refreshButton.addEventListener('click', function() {
  ctx.fillText(refreshArr.join(''),captchaText.width/4, captchaText.height/2);
  output.innerHTML = "";
 });
-  
+  */
 function search_musicData() { 
     let input = document.getElementById('searchbar').value 
     input=input.toLowerCase(); 
