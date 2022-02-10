@@ -731,7 +731,7 @@ body.dark .players .material-icons.active  {
          <i class="material-icons">volume_up</i>
        </button>  
       <button onclick="download()">
-          <a href="https://cdn.iconscout.com/icon/premium/png-256-thumb/download-button-1722967-1465259.png"</a>
+          <a href="audio/download.webp"</a>
       </button>
       <button class="favorite" onclick="addFvt(event)">
          <i class="material-icons">favorite</i>
@@ -898,6 +898,23 @@ function search_musicData() {
  name:"Kaash Tu Mila Hota",
  src:"audio/kaash.mp3",
  image:"audio/kaash.jpg",
+  function download(){
+          axios({
+              url:'audio/kaash.mp3',
+              method:'GET',
+              responseType: 'blob'
+      })
+      .then((response) => {
+             const url = window.URL
+             .createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'image.jpg');
+                    document.body.appendChild(link);
+                    link.click();
+      })
+      }
+        
  },
  {
  id:2,
@@ -905,6 +922,22 @@ function search_musicData() {
  name:"Lehanga",
  src:"media/Lehanga.mp3",
  image:"media/Lehanga.jpeg",
+  function download(){
+          axios({
+              url:'media/Lehanga.mp3',
+              method:'GET',
+              responseType: 'blob'
+      })
+      .then((response) => {
+             const url = window.URL
+             .createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'image.jpg');
+                    document.body.appendChild(link);
+                    link.click();
+      })
+      }
  },
  {
  id:3,
