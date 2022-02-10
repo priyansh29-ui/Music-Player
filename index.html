@@ -711,7 +711,6 @@ body.dark .players .material-icons.active  {
        <h3 id="name">Name</h3>
        <small id="category">Category</small>
      </div>
-     
      <div class="volume-box">
      <span onclick="volumeDown()"><i class="material-icons">remove</i></span>
      
@@ -730,6 +729,9 @@ body.dark .players .material-icons.active  {
        <button class="volume" onclick="volumeBox(event)">
          <i class="material-icons">volume_up</i>
        </button>  
+      <button onclick="download()">
+          <a href="https://cdn.iconscout.com/icon/premium/png-256-thumb/download-button-1722967-1465259.png"</a>
+      </button>
       <button class="favorite" onclick="addFvt(event)">
          <i class="material-icons">favorite</i>
       </button>
@@ -888,12 +890,14 @@ function search_musicData() {
  const musicList = document.getElementById("music-list");
  const body = document.querySelector("body");
  // variable 
-  
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js">
+   </script>
  let musicData = [
  {
  id:1,
  category:"Love",
  name:"Kaash Tu Mila Hota",
+ src:"audio/kaash.mp3" download;download me,
  src:"audio/kaash.mp3",
  image:"audio/kaash.jpg",
  },
