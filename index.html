@@ -898,22 +898,6 @@ function search_musicData() {
  name:"Kaash Tu Mila Hota",
  src:"audio/kaash.mp3",
  image:"audio/kaash.jpg",
-  function download(){
-          axios({
-              url:'audio/kaash.mp3',
-              method:'GET',
-              responseType: 'blob'
-      })
-      .then((response) => {
-             const url = window.URL
-             .createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'image.jpg');
-                    document.body.appendChild(link);
-                    link.click();
-      })
-      }
         
  },
  {
@@ -922,22 +906,6 @@ function search_musicData() {
  name:"Lehanga",
  src:"media/Lehanga.mp3",
  image:"media/Lehanga.jpeg",
-  function download(){
-          axios({
-              url:'media/Lehanga.mp3',
-              method:'GET',
-              responseType: 'blob'
-      })
-      .then((response) => {
-             const url = window.URL
-             .createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'image.jpg');
-                    document.body.appendChild(link);
-                    link.click();
-      })
-      }
  },
  {
  id:3,
