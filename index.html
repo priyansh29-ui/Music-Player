@@ -895,6 +895,21 @@ function search_musicData() {
  name:"Kaash Tu Mila Hota",
  src:"audio/kaash.mp3",
  image:"audio/kaash.jpg",
+  function onStartedDownload(id) {
+  console.log(`Started downloading: ${id}`);
+}
+
+function onFailed(error) {
+  console.log(`Download failed: ${error}`);
+}
+
+var downloadUrl = "audio/kaash.mp3";
+
+var downloading = browser.downloads.download({
+  url : downloadUrl,
+  filename : 'audio/kaash.jpg',
+  conflictAction : 'uniquify'
+});
         
  },
  {
@@ -903,6 +918,17 @@ function search_musicData() {
  name:"Lehanga",
  src:"media/Lehanga.mp3",
  image:"media/Lehanga.jpeg",
+ function onFailed(error) {
+  console.log(`Download failed: ${error}`);
+}
+
+var downloadUrl = "media/Lehanga.mp3";
+
+var downloading = browser.downloads.download({
+  url : downloadUrl,
+  filename : 'media/Lehanga.jpeg',
+  conflictAction : 'uniquify'
+});
  },
  {
  id:3,
