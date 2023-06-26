@@ -400,6 +400,33 @@ body.dark .header button {
  }
 }
 
+  #searchbar{
+     margin-left: 15%;
+     padding:15px;
+     border-radius: 10px;
+   }
+ 
+   input[type=text] {
+      width: 30%;
+      -webkit-transition: width 0.15s ease-in-out;
+      transition: width 0.15s ease-in-out;
+   }
+ 
+   /* When the input field gets focus,
+        change its width to 100% */
+   input[type=text]:focus {
+     width: 70%;
+   }
+ 
+  #list{
+    font-size:  1.5em;
+    margin-left: 90px;
+   }
+ 
+.animals{
+   display: list-item;    
+  } 
+
 .players {
  position:fixed;
  width:100%;
@@ -679,8 +706,10 @@ body.dark .players .material-icons.active  {
 <span></span>
       <span></span>
     </div>
- <input id="searchbar" onkeyup="search_showMusicList()" type="text"
+
+ <input id="searchbar" onkeyup="search_musicDatat()" type="text"
         name="search" placeholder="Search music.."> 
+
 <header class="header">
  <h3>All Songs</h3>
 </header>
@@ -873,6 +902,7 @@ function search_musicData() {
  const musicList = document.getElementById("music-list");
  const body = document.querySelector("body");
  // variable 
+ 
  let musicData = [
  {
  id:1,
@@ -1248,6 +1278,21 @@ function search_musicData() {
  },
    
 ]
+
+  function musicData() {
+    let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let x = document.getElementsByClassName('name:');
+      
+    for (i = 0; i < x.length; i++) { 
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="list-item";                 
+        }
+    }
+}
 let repeatMusic = false;
 let index = 1;
 let songs = musicData;
