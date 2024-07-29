@@ -6,5 +6,5 @@ Digital led Display clock
 Protected with Captcha
 Latest all types Songs
 Search facility also available
-https://vidhigupt.github.io/Music-Player/
+https://priyansh29-ui.github.io/Music-Player
 Output link!!
